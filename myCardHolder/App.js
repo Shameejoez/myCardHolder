@@ -6,21 +6,31 @@ import { Camera, CameraType, } from 'expo-camera'
 import { useEffect, useRef, useState } from 'react';
 import * as MediaLibrary from 'expo-media-library'
 import BackButton from './components/backButton';
+import SnapButton from './components/snapButton';
 
 
-const Btn = styled.TouchableOpacity
-`
-color: #BF4F74;
-font-size: 1em;
-margin: 1em;
-padding: 20px 15px;
-border-radius: 3px;
-width: 64px;
-height: 64px;
-position: absolute;
-left: 0;
-top: 40px;
+const MainContainer = styled.View`
+flex: 1;
+background-color: '#7B68EE';
+align-items: center;
+justify-content: flex-start;
+flex-direction: column;
 `;
+
+const Qdrat = styled.View`
+  width: 100%;
+  height: 15.55%;
+  align-items: flex-end;
+  padding: 15px 15px 25px 15px;
+  border-bottom-width: 1px;
+  border-bottom-color: black;
+`
+
+const ButtonContainer = styled.View(props => ({
+  width: '100%',
+  background: props. $biba,
+  alignItems: props. $positionItem,
+}));
 
 export default function App() {
 
@@ -31,8 +41,6 @@ export default function App() {
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
   const cameraRef = useRef(null);
 
-
-
   const [permission, requestPermission] = Camera.useCameraPermissions();
 
 
@@ -42,40 +50,46 @@ export default function App() {
 
   useEffect(() => {
     (async() => {
-      pausePrevew()
       Camera.requestCameraPermissionsAsync();
       MediaLibrary.requestPermissionsAsync();
-      const cameraStatus = await Camera.getCameraPermissionsAsync();
+      await Camera.getCameraPermissionsAsync();
+  
+
     })()
   },[])
 
    const onPressCameraStatus = () => {
     setCameraStatus(!cameraStatus ? true : false)
-    alert(cameraStatus)
-    console.log(cameraStatus)
   }
 
-  return (
-    <View style={styles.container}>{
-      cameraStatus ? 
-      <Camera style={styles.camera} ref={cameraRef} >
-      <View style={styles.buttonContainer}>
-      <BackButton ccc={onPressCameraStatus}/>
-    </View>
-  </Camera> : 
-  <AddButton cameraSet={onPressCameraStatus}/>
-    }
   
-  </View>
+
+  return (
+    <MainContainer contentPosition={cameraStatus ? 'center' : 'flex-start'} style={styles.container}>      
+    {
+      cameraStatus ? 
+      <Camera style={styles.camera} ref={cameraRef}  ratio={'16:9'}>
+        <ButtonContainer $positionItem='flex-start'>
+          <BackButton ccc={onPressCameraStatus}/>
+        </ButtonContainer>
+        <ButtonContainer $positionItem='center'>
+          <SnapButton  />
+        </ButtonContainer>
+    </Camera> :
+  <Qdrat>
+    <AddButton cameraSet={onPressCameraStatus}/>
+  </Qdrat> 
+    }     
+  </MainContainer>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#888888',
+    backgroundColor: '#7B68EE',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     flexDirection: 'column',
     '*': {
       marginTop: '15px',
@@ -85,16 +99,6 @@ const styles = StyleSheet.create({
     backgroundColor:'#red', 
     flex: 1,
     width: '100%',
+    justifyContent: 'space-between',
   },
-  buttonContainer: {
-    flex: 1,
-    justifyContent: 'space-around',
-    alignItems: 'center'
-  },
-  buttonTop: {
-    bottom: '200px'
-  },
-  button: {
-    backgroundColor: '#888888'
-  }
 });

@@ -6,7 +6,6 @@ import styled from "styled-components";
 const Btn = styled.TouchableOpacity`
     width: 64px;
     height: 64px;
-    position: absolute;
     left: 0;
     top: 40px;
     margin: 15px;
