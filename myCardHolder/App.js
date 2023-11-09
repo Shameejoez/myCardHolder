@@ -18,7 +18,9 @@ const Qdrat = styled.View`
   border-bottom-color: black;
 `
 
-const Kdrat = styled.View`
+
+
+/* const Kdrat = styled.View`
   width: 100%;
   height: 30.55%;
   align-items: center;
@@ -27,7 +29,7 @@ const Kdrat = styled.View`
   border-bottom-width: 1px;
   border-bottom-color: black;
   background-color: wheat;
-`
+` */
 
 const ButtonContainer = styled.View(props => ({
   width: '100%',
@@ -48,8 +50,18 @@ export default function App() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
 
 
-  const stopCamera = () => {
-    cameraRef.current.pausePreview()
+  const makePhoto = async() => {
+    if (cameraRef) {
+      try {
+        const data = await cameraRef.current.takePictureAsync();
+        console.log(data.uri);
+        setCameraStatus(false);
+        setImage(data.uri)
+      } catch(e) {
+        console.log(e)
+      }
+    }
+    
   }
 
   useEffect(() => {
@@ -57,8 +69,6 @@ export default function App() {
       Camera.requestCameraPermissionsAsync();
       MediaLibrary.requestPermissionsAsync();
       await Camera.getCameraPermissionsAsync();
-  
-
     })()
   },[])
 
@@ -77,7 +87,7 @@ export default function App() {
                 <BackButton ccc={onPressCameraStatus}/>
               </ButtonContainer>
               <ButtonContainer $positionItem='center'>
-                <SnapButton  />
+                <SnapButton  makePhoto={makePhoto} />
               </ButtonContainer>
           </Camera> :
           

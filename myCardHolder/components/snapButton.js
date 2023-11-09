@@ -25,10 +25,10 @@ background-color: #888888;
 `;
 
 
-function SnapButton () {
+function SnapButton ({makePhoto}) {
     return (
         <ButtonSnap>
-            <InnerCircle></InnerCircle>
+            <InnerCircle onPress={() => makePhoto()}></InnerCircle>
         </ButtonSnap>
     )
 }
