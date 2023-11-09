@@ -26,7 +26,7 @@ const Kdrat = styled.View`
   padding: 15px 15px 25px 15px;
   border-bottom-width: 1px;
   border-bottom-color: black;
-  background-color: red;
+  background-color: wheat;
 `
 
 const ButtonContainer = styled.View(props => ({
@@ -69,7 +69,7 @@ export default function App() {
   
 
   return (
-      <LinearGradient colors={[ '#FFFFE0',  '#FFFACD', '#DCDCDC']} /* locations={[0.4, 1, 0.1]} */ /* start={{x: 0, y: 1}} end={{x: 0, y: 0.7}} */  style={styles.container}>
+      <LinearGradient colors={[ '#DCDCDC' ,'#FFFFE0', '#BDB76B' ]} style={styles.container}>
           {
             cameraStatus ? 
             <Camera style={styles.camera} ref={cameraRef}  ratio={'16:9'}>
@@ -80,18 +80,12 @@ export default function App() {
                 <SnapButton  />
               </ButtonContainer>
           </Camera> :
+          
         <Qdrat>
           <AddButton cameraSet={onPressCameraStatus}/>
         </Qdrat> 
   
     }
-
-    <Kdrat>
-    {/*   <View style={{width: '40px', height: '50%', backgroundColor: 'black'}}></View> */}
-     <Image source={require('./components/1270001.svg')} style={{width: '20%' ,height: '20%'}}></Image>
-    </Kdrat>
-   
-    
       </LinearGradient>
   );
 }
