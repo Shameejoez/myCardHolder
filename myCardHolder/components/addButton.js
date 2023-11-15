@@ -4,12 +4,12 @@ import PlusAdd from '../assets/svg/plusAdd.svg'
 import { LinearGradient } from 'expo-linear-gradient';
 
 const BtnAdd = styled.View`
-width: 40px;
-height: 40px;
-margin-top: 40px;
-border-radius: 50px;
-justify-content: center;
-align-items: center;
+    width: 40px;
+    height: 40px;
+    margin-top: 40px;
+    border-radius: 50px;
+    justify-content: center;
+    align-items: center;
 `;
 
 const AddIcon = styled.Image`
